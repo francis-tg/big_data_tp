@@ -2,9 +2,6 @@ import pymongo
 import pandas as pd
 import matplotlib.pyplot as plt
 import utils
-
-
-
 # Connexion à la base de données MongoDB
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["donnee_vente"]
@@ -20,3 +17,4 @@ df.plot(kind="bar", x="categorie", y="total_revenu", title="Analyse par Catégor
 plt.xlabel("Catégorie")
 plt.ylabel("Montant")
 plt.show()
+df.to_csv("export.csv",index=False)
