@@ -1,15 +1,12 @@
 import pandas as pd
 from pymongo import MongoClient
-
+from constant import DB_URL
 # Lecture des données Excel dans un DataFrame pandas
-df = pd.read_excel("RandomData.xlsx")
+df = pd.read_excel("./files/RandomData.xlsx")
 # Connexion à MongoDB
-client = MongoClient("localhost", 27017)
+client = MongoClient(DB_URL)
 db = client["donnee_vente"]
 collection = db["ventes"]
-
-
-
 
 # Conversion des données du DataFrame pandas en dictionnaire pour l'insertion dans MongoDB
 data = df.to_dict(orient="records")
