@@ -20,6 +20,12 @@ def generate_pipeline(categorie_recherchee=None, limite=20):
                 "total_revenu": {
                     "$sum": {"$multiply": ["$quantite", "$prix_unitaire"]}
                 },  # Calcule le revenu total pour chaque catégorie en multipliant la quantité par le prix unitaire
+                "valeurs": {
+                    "$push": {
+                        "valeur_max": "$valeur_max",
+                        "valeur_moyenne": "$valeur_moyenne",
+                    }
+                },
             }
         }
     )
@@ -34,6 +40,8 @@ def generate_pipeline(categorie_recherchee=None, limite=20):
                     "total_quantite": 1,  # Inclut le champ "total_quantite"
                     "total_revenu": 1,  # Inclut le champ "total_revenu",
                     "quantite": "$_id.quantite",
+                    "valeur_max": {"$max": "$total_revenu"},
+                    "valeur_moyenne": {"$avg": "$total_revenu"},
                 }
             }
         )
