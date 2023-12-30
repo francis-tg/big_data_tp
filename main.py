@@ -1,3 +1,4 @@
+#importations des modules
 import pymongo
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -7,9 +8,11 @@ from constant import DB_URL
 client = pymongo.MongoClient(DB_URL)
 db = client["donnee_vente"]
 collection = db["ventes"]
+#générer le pipeline
 pipeline = utils.generate_pipeline()
 result_mongo = utils.execute_pipeline(pipeline=pipeline, collection=collection)
 #print(list(result_mongo))
+# conversion en donnée csv
 df = pd.DataFrame(list(result_mongo))
 # Création d'un graphique (ici, un histogramme)
 df.plot(kind="bar", x="categorie", y="total_revenu", title="Analyse par Catégorie")
@@ -18,5 +21,5 @@ df.plot(kind="bar", x="categorie", y="valeur_max", title="Analyse par Catégorie
 df.plot(kind="bar", x="categorie", y="valeur_moyenne", title="Analyse par Catégorie")
 plt.xlabel("Catégorie")
 plt.ylabel("Montant")
-plt.show()
+#export en csv
 df.to_csv("./output/export.csv", index=False)
