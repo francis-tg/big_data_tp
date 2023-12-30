@@ -1,3 +1,4 @@
+#importation des modules
 import pandas as pd
 from pymongo import MongoClient
 from constant import DB_URL
@@ -12,14 +13,17 @@ collection = db["ventes"]
 data = df.to_dict(orient="records")
 new_data = []
 for d in data:
+    # ittération de la données et je fais le calcul du total de chaque colonne
     sd = {**d, "total": d["quantite"] * d["prix_unitaire"]}
+    #push les datas dans le nouveau tableau
     new_data.append(sd)
 
+#insertion des donnés dans db mongo
 collection.insert_many(new_data)
 
-pipeline = [
+""" pipeline = [
     {"$group": {"_id": "$category", "total": {"$sum": "$amount"}}},
     {"$sort": {"total": -1}},
     {"$limit": 5},
-]
+] """
 
