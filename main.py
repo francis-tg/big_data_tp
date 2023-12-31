@@ -21,5 +21,6 @@ df.plot(kind="bar", x="categorie", y="valeur_max", title="Analyse par Catégorie
 df.plot(kind="bar", x="categorie", y="valeur_moyenne", title="Analyse par Catégorie")
 plt.xlabel("Catégorie")
 plt.ylabel("Montant")
+plt.show()
 #export en csv
 df.to_csv("./output/export.csv", index=False)
